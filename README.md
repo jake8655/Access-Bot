@@ -5,4 +5,4 @@
   
 </div>
 
-<p>Access-Bot is a <a href="https://discord.com">Discord</a> bot that brings more <i>security</i> and <i>member filtering<i> to your Discord servers. It let's you ensure that <i>all users</i> that join your server have carefully <i>read the rules</i>.</p>
+<p>Access-Bot is a <a href="https://discord.com">Discord</a> bot that brings more <b>security</b> and <b>member filtering<b> to your Discord servers. It let's you ensure that all users have carefully <i>read the rules</i>.</p>
