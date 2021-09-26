@@ -19,9 +19,12 @@ This is a **self-host** bot, that means you will have to *download* the files ab
 <p><b>If you get stuck during the installation feel free to get in touch with <a href="https://discord.com/users/300963276223807488">me</a> through Discord.</b> I usually respond in a day or less.</p>
 
 # Contact me!
-If the installation instructions aren't clear and you need more information feel free to get in touch with me. I'm the most active on Discord, but I'll list my other social media platforms aswell.
+If the installation instructions aren't clear and you need more information feel free to get in touch with me. I'm the most active on *Discord*, but I'll list my other social media platforms aswell.
 <ul>
   <li><a href="https://discord.com/users/300963276223807488">Discord</a></li>
   <li><a href="https://steamcommunity.com/profiles/76561198259449147/">Steam</a></li>
   <li><a href="mailto:dominik8655@gmail.com">Email</a></li>
 </ul>
+
+# License
+Currently you can **do whatever you want** with the bot. Feel free to customize it, rewrite it, get inspiration from it...
