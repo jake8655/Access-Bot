@@ -9,7 +9,7 @@
 
 # Installation
 This is a **self-host** bot, that means you will have to *download* the files above and *host* the bot yourself. In order to host the bot please **follow the instructions below**:
-<ul>
+<ol>
   <li>Install <a href="https://nodejs.org">Node.js</a>.</li>
   <li>Download the bot's files from <a href="https://github.com/Jake8655/Access-Bot">the github page</a>.</li>
-</ul>
+</ol>
