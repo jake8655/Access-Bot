@@ -1,0 +1,15 @@
+{
+  "name": "access-bot",
+  "version": "1.0.0",
+  "description": "Give access to people on your server!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jake",
+  "license": "ISC",
+  "dependencies": {
+    "child_process": "^1.0.2",
+    "discord.js": "^13.1.0"
+  }
+}
