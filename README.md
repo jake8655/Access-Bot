@@ -27,4 +27,4 @@ If the installation instructions aren't clear and you need more information feel
 </ul>
 
 # License
-Currently you can **do whatever you want** with the bot. Feel free to customize it, rewrite it, get inspiration from it...
+Currently you can **do whatever you want** with the bot. Feel free to customize it, rewrite it, get inspiration from it or anything else you would like to do.
