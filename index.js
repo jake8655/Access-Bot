@@ -3,15 +3,15 @@
 const Discord = require('discord.js');
 const { exec } = require('child_process');
 
-//* JSON databases
-const config = require('./data/config.json');
+//* JSON files
+const config = require('./config.json');
 const dontchange = require('./data/dontchange.json');
 
 //* Custom JS files
 const { User } = require('./classes/user.js');
 const { SetClient, startTest } = require('./functions/test.js');
 const { SetInfoLOG } = require('./functions/log.js');
-const { SetInfo, SetUser, Private, Time, Role, Started, Channel } = require('./functions/createEmbed.js');
+const { SetInfo, Private, Time, Role, Started, Channel } = require('./functions/createEmbed.js');
 const { editFileID, editFileServer, editFileStatus } = require('./functions/file.js');
 //#endregion
 
@@ -28,7 +28,6 @@ let icon;
 
 //! Run when the bot starts
 client.on('ready', () => {
-    console.log('smth happened');
     console.log('Access-Bot online ✅');
     client.user.setActivity(dontchange.status, { type: 'PLAYING' });
     SetClient(client);
@@ -67,9 +66,6 @@ client.on('interactionCreate', interaction => {
             }
         }
     })
-
-    // Set the user for the embeds
-    SetUser(interaction.user);
 
     // Send the correct embed according to the statements below
     if(interaction.member.roles.cache.some(role => role.id === config.questionOptions.roleID)) {
@@ -204,6 +200,8 @@ client.on('messageCreate', msg => {
                 embed.setDescription('```Restarted.```')
                 .setColor('BLURPLE');
                 message.edit({ embeds: [embed] });
+
+                console.log(`Bot restarted by ${msg.author.username}#${msg.author.discriminator}`);
             }, 2000);
             setTimeout(() => {
                 client.destroy();
@@ -237,6 +235,8 @@ client.on('messageCreate', msg => {
                 embed.setDescription('```Stopped.```\nIf you wish to **start the bot back up**, you can do it via running `start.bat` or `start.vbs`.')
                 .setColor('BLURPLE');
                 message.edit({ embeds: [embed] });
+
+                console.log(`Bot stopped by ${msg.author.username}#${msg.author.discriminator}`);
             }, 1000);
             setTimeout(() => {
                 process.exit(1);
@@ -259,7 +259,8 @@ client.on('messageCreate', msg => {
 
         if(!status) return msg.channel.send({ embeds: [errorEmbed] });
 
-        if(status === 'delete') {
+        if(status === 'remove') {
+            console.log(`Bot status removed by ${msg.author.username}#${msg.author.discriminator}`);
             client.user.setActivity('');
             return editFileStatus('');
         }
@@ -272,6 +273,7 @@ client.on('messageCreate', msg => {
         .setDescription(`\nStatus successfully updated :white_check_mark:\n\`\`\`${status}\`\`\``);
 
         msg.channel.send({ embeds: [embed] });
+        console.log(`Bot status changed to ${status} by ${msg.author.username}#${msg.author.discriminator}`);
         client.user.setActivity(status, { type: 'PLAYING' });
         editFileStatus(status)
     }
