@@ -5,4 +5,4 @@
   
 </div>
 
-<p>This bot is cool</p>
+<p>Access-Bot is a <a href="https://discord.com" target="_blank">Discord</a> bot.</p>
