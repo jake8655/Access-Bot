@@ -12,4 +12,7 @@ This is a **self-host** bot, that means you will have to *download* the files ab
 <ol>
   <li>Install <a href="https://nodejs.org">Node.js</a>.</li>
   <li>Download the bot's files from <a href="https://github.com/Jake8655/Access-Bot">the github page</a>.</li>
+  <li>Create a <a href="https://discord.com/developers">Discord bot</a> and paste the bot's token into the <b>config.json</b> file.</li>
+  <li>Customize the bot to your likings.</li>
 </ol>
+<p><b>If you get stuck during the installation feel free to get in touch with <a href="https://discord.com/users/300963276223807488">me</a> through Discord.</b> I usually respond in a day or less.</p>
