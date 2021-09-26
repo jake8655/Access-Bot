@@ -2,14 +2,13 @@
 //* NPM packages
 const Discord = require('discord.js');
 
-//* JSON databases
-const config = require('../data/config.json');
+//* JSON files
+const config = require('../config.json');
 //#endregion
 
 //#region Variables
 let name;
 let icon;
-let user;
 //#endregion
 
 //#region Functions
@@ -17,11 +16,8 @@ const SetInfo = (sentName, sentIcon) => {
     name = sentName;
     icon = sentIcon;
 }
-const SetUser = sentUser => {
-    user = sentUser;
-}
 
-const Private = () => {
+const Private = user => {
     let embed = config.privateEmbed;
     const embedMessage = new Discord.MessageEmbed()
     .setColor(embed.color)
@@ -33,7 +29,7 @@ const Private = () => {
     return embedMessage;
 }
 
-const Time = () => {
+const Time = user => {
     const embedMessage = new Discord.MessageEmbed()
     .setColor('RED')
     .setTitle(`:alarm_clock: You can't retry yet, ${user.username}!`)
@@ -44,7 +40,7 @@ const Time = () => {
     return embedMessage;
 }
 
-const Failed = () => {
+const Failed = user => {
     const embed = new Discord.MessageEmbed()
         .setColor('RED')
         .setTitle(`:alarm_clock: Your time has run out, ${user.username}!`)
@@ -55,7 +51,7 @@ const Failed = () => {
     return embed;
 }
 
-const Role = () => {
+const Role = user => {
     const embedMessage = new Discord.MessageEmbed()
     .setColor('RED')
     .setTitle(`:warning: You can't take the test again, ${user.username}!`)
@@ -66,7 +62,7 @@ const Role = () => {
     return embedMessage;
 }
 
-const Started = () => {
+const Started = user => {
     const embedMessage = new Discord.MessageEmbed()
     .setColor('RED')
     .setTitle(`:warning: You are already taking the test, ${user.username}!`)
@@ -104,5 +100,5 @@ const Question = (question, index) => {
 //#endregion
 
 //#region Export
-module.exports = { SetInfo, SetUser, Private, Time, Failed, Role, Started, Channel, Question };
+module.exports = { SetInfo, Private, Time, Failed, Role, Started, Channel, Question };
 //#endregion

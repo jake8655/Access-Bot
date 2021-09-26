@@ -6,8 +6,8 @@ const Discord = require('discord.js');
 const { Question, Failed } = require('./createEmbed.js');
 const { StartLOG, EndLOG, EndTimeLOG, BanLOG, UnBanLOG } = require('./log.js');
 
-//* JSON databases
-const config = require('../data/config.json');
+//* JSON files
+const config = require('../config.json');
 const dontchange = require('../data/dontchange.json');
 //#endregion
 
@@ -54,34 +54,25 @@ async function startTest(user) {
         // Send the question to the user
         let msg = await user.send({ embeds: [Question(config.questionOptions.questions[randQuestion-1], i)] });
 
-        // React to it with the according reaction
+        let reactions;
         switch(config.questionOptions.questions[randQuestion-1].answers.length) {
             case 1:
-                await msg.react('1️⃣');
-
-                await sent();
+                reactions = ['1️⃣'];
             break;
             case 2:
-                await msg.react('1️⃣');
-                await msg.react('2️⃣');
-                
-                await sent();
+                reactions = ['1️⃣', '2️⃣'];
             break;
             case 3:
-                await msg.react('1️⃣');
-                await msg.react('2️⃣');
-                await msg.react('3️⃣');
-
-                await sent();
+                reactions = ['1️⃣', '2️⃣', '3️⃣'];
             break;
             case 4:
-                await msg.react('1️⃣');
-                await msg.react('2️⃣');
-                await msg.react('3️⃣');
-                await msg.react('4️⃣');
-
-                await sent();
+                reactions = ['1️⃣', '2️⃣', '3️⃣', '4️⃣'];
             break;
+        }
+        // Add the appropriate reactions
+        for(let y = 0; y < reactions.length; y++) {
+            await msg.react(reactions[y]);
+            if(y === reactions.length-1) await sent();
         }
 
         // Trigger when the reactions were added
@@ -90,27 +81,13 @@ async function startTest(user) {
             user.test.time = setTimeout(async () => {
                 i = config.questionOptions.questions.length;
                 msg.delete();
-                await user.send({ embeds: [Failed()] });
                 user.fails = { timer: null, num: user.fails ? ++user.fails.num : 1 };
+
+                if(user.fails.num < 3) await user.send({ embeds: [Failed(user)] });
+
                 EndTimeLOG(user);
                 return startTimer(user, client.channels.cache.get(config.rulesID));
             }, config.questionOptions.questionTime);
-    
-            let reactions;
-            switch(config.questionOptions.questions[randQuestion-1].answers.length) {
-                case 1:
-                    reactions = ['1️⃣'];
-                break;
-                case 2:
-                    reactions = ['1️⃣', '2️⃣'];
-                break;
-                case 3:
-                    reactions = ['1️⃣', '2️⃣', '3️⃣'];
-                break;
-                case 4:
-                    reactions = ['1️⃣', '2️⃣', '3️⃣', '4️⃣'];
-                break;
-            }
     
             // Filter out bot reactions and those that aren't the appropriate emojis
             const filter = (reaction, user) => {
@@ -179,6 +156,7 @@ async function endTest(user, role, roleUser, rulesChannel) {
         EndLOG(user);
         delete user.test;
         if(user.fails) delete user.fails;
+        user.send({ embeds: [embed] });
     } else {
         //? Trigger when the user's percentage is below 80%
         embed.setTitle(':x: You have failed the test!')
@@ -187,10 +165,11 @@ async function endTest(user, role, roleUser, rulesChannel) {
         .setColor('RED');
         
         user.fails = { timer: null, num: user.fails ? ++user.fails.num : 1 };
+        if(user.fails.num < 3) user.send({ embeds: [embed] });
+
         EndLOG(user);
         startTimer(user, rulesChannel);
     }
-    user.send({ embeds: [embed] });
 
     // Make the user see the rules channel again
     rulesChannel.permissionOverwrites.delete(user.id);
