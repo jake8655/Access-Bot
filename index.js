@@ -28,6 +28,7 @@ let icon;
 
 //! Run when the bot starts
 client.on('ready', () => {
+    console.log('smth happened');
     console.log('Access-Bot online ✅');
     client.user.setActivity(dontchange.status, { type: 'PLAYING' });
     SetClient(client);
