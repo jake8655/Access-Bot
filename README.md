@@ -6,7 +6,7 @@
 </div>
 
 <p>Access-Bot is a <a href="https://discord.com">Discord</a> bot that brings more <b>security</b> and <b>member filtering</b> to your Discord servers. It let's you ensure that all users have carefully <i>read the rules</i>.</p>
-asdasd
+<p>The bot will send a message into a desired channnel with a button attached to it. When a user clicks on the button the bot will DM them with more details about a test they will need to take. After the user types the keyword <i>start</i> the test will start. The user will have to correctly answer 80% of the test's questions by reacting to the bot's messages. After the bot has asked all questions it will calculate the user's percentage. If the user's test is successfull they will get a role. If the user's test is not successfull they will have to wait 5 minutes before taking the test again. If the user doesn't successfully complete the test 3 times they will temporarily get banned from the server for 30 minutes. After the 30 minutes have passed the user can rejoin and try to complete the test again.</p>
 
 # Installation
 This is a **self-host** bot, that means you will have to *download* the files above and *host* the bot yourself. In order to host the bot please **follow the instructions below**:
