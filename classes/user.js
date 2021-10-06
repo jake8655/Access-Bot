@@ -1,4 +1,4 @@
-class User {
+export default class User {
     constructor(id, intro, started, percentage, answers, fail, timer, timeLeft) {
         this.id = id;
         this.intro = intro;
@@ -10,5 +10,3 @@ class User {
         this.timeLeft = timeLeft;
     }
 }
-
-module.exports = { User };

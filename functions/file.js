@@ -1,50 +1,16 @@
 //#region Imports
 //* NPM packages
-const fsp = require('fs').promises;
+import fsp from 'fs/promises';
 //#endregion
 
-async function editFileID(id) {
-    try {
-        let data = await fsp.readFile('data/dontchange.json');
-        let obj = JSON.parse(data);
+export default async function editFile(type, data) {
+   let file = await fsp.readFile('data/dontchange.json');
+   let obj = JSON.parse(file);
 
-        obj.messageID = id;
+   if(type === 'message') obj.messageID = data;
+   else if(type === 'server') obj.serverID = data;
+   else if(type === 'status') obj.status = data;
+   else return;
 
-        await fsp.writeFile('data/dontchange.json', JSON.stringify(obj));
-     } catch(e) {
-        console.log(e);
-        throw e;
-     }
+   await fsp.writeFile('data/dontchange.json', JSON.stringify(obj));
 }
-
-async function editFileServer(id) {
-    try {
-        let data = await fsp.readFile('data/dontchange.json');
-        let obj = JSON.parse(data);
-
-        obj.serverID = id;
-
-        await fsp.writeFile('data/dontchange.json', JSON.stringify(obj));
-     } catch(e) {
-        console.log(e);
-        throw e;
-     }
-}
-
-async function editFileStatus(status) {
-   try {
-       let data = await fsp.readFile('data/dontchange.json');
-       let obj = JSON.parse(data);
-
-       obj.status = status;
-
-       await fsp.writeFile('data/dontchange.json', JSON.stringify(obj));
-    } catch(e) {
-       console.log(e);
-       throw e;
-    }
-}
-
-//#region Exports
-module.exports = { editFileID, editFileServer, editFileStatus };
-//#endregion
