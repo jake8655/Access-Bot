@@ -78,7 +78,7 @@ const Channel = () => {
     const embed = embedConfig.embedMessage;
     const embedMessage = new MessageEmbed()
     .setColor(embed.color)
-    .setTitle(embed.title)
+    .setTitle(`Welcome to ${name}! :wave:`)
     .setAuthor(name, icon)
     .setDescription(embed.description)
     .setThumbnail(embed.thumbnail);
