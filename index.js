@@ -35,7 +35,7 @@ let icon;
 //#region Bot logic
 //! Run when the bot starts
 client.on('ready', () => {
-    console.log('Access-Bot online ✅');
+    console.log('\x1b[32m%s\x1b[0m', `${client.user.username} - ONLINE`);
     client.user.setActivity(data.status, { type: 'PLAYING' });
     
     SetClient(client);
@@ -82,7 +82,7 @@ client.on('interactionCreate', interaction => {
         interaction.user.send({ embeds: [Started(interaction.user)] });
     } else {
         interaction.user.send({ embeds: [Private(interaction.user)] });
-        interaction.user.test = new User(interaction.user.id, true, false, 0, [], false, null, null);
+        interaction.user.test = new User(true, false, null, [], null, null);
 
         // Remove the permission of seeing the channel for the user
         client.channels.cache.get(config.rulesChannelID).permissionOverwrites.create(interaction.user, {
@@ -121,5 +121,10 @@ client.on('messageCreate', msg => Commands(name, icon, client, msg));
 //#endregion
 
 //#region Login
-client.login(config.TOKEN);
+client.login(config.TOKEN).then(null).catch(() => {
+    console.log('\x1b[31m%s\x1b[0m', 'INVALID TOKEN!');
+    setTimeout(() => {
+        process.exit(1);
+    }, 1000);
+});
 //#endregion

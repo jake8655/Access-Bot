@@ -73,7 +73,7 @@ const BanLOG = user => {
     const embedMessage = new MessageEmbed()
     .setColor('#A62019')
     .setAuthor('Has been temporarily banned!', user.avatarURL())
-    .setDescription(`**${user} (${user.username}#${user.discriminator}) |** Failed to complete the test for the \`3. time\`. They have been banned for ${questionOptions.banTime/60000} minute(s).`)
+    .setDescription(`**${user} (${user.username}#${user.discriminator}) |** Failed to complete the test for the \`3. time\`. They have been banned for ${questionConfig.banTime/60000} minute(s).`)
     .setTimestamp(new Date())
     .setFooter(name, icon);
 

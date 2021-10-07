@@ -34,7 +34,7 @@ const Time = user => {
     const embedMessage = new MessageEmbed()
     .setColor('RED')
     .setTitle(`:alarm_clock: You can't retry yet, ${user.username}!`)
-    .setDescription(`You will be able to retry the test in ${Math.round((((questionConfig.again - user.test.timeLeft) / 6000000) * 100 + Number.EPSILON) * 100) / 100} minute(s)`)
+    .setDescription(`You will be able to retry the test in **${Math.round((((questionConfig.again - user.test.timeLeft) / 6000000) * 100 + Number.EPSILON) * 100) / 100} minute(s)**`)
     .setTimestamp(new Date())
     .setFooter('🚧 If you think this is an error please contact our Staff!');
     

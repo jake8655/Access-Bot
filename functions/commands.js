@@ -8,6 +8,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 import { exit, env as config } from 'process';
 import { default as questionConfig } from '../questions.js';
+import { default as embedConfig } from '../embed.js';
 
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
@@ -21,6 +22,7 @@ import editFile from './file.js';
 //#region Code
 //! Run when a user sends a message
 export default function Commands(name, icon, client, msg) {
+    let commandConfig;
 
     // Check if the message was sent by a bot
     if(msg.author.bot) return;
@@ -38,13 +40,14 @@ export default function Commands(name, icon, client, msg) {
     if(msg.content === '!help' || msg.mentions.has(client.user.id)) {
         if(!msg.guildId) return;
         if(msg.content.includes('@here') || msg.content.includes('@everyone')) return;
+        commandConfig = embedConfig.commands.help;
 
         const embed = new MessageEmbed()
-        .setColor('BLURPLE')
+        .setColor(commandConfig.color)
         .setTimestamp(new Date())
         .setFooter(name, icon)
-        .setTitle(':file_folder: Help')
-        .setDescription('**Commands:**\n:arrow_right: `!help` - Shows this message\n\n:arrow_right: `!info @user` - Lists some useful information about the user\n\n:arrow_right: `!status [status-text]` - Sets the bot\'s status\n\n:arrow_right: `!status remove` - Deletes the bot\'s status\n\n:arrow_right: `!restart` - Restarts the bot\n\n:arrow_right: `!stop` - Stops the bot');
+        .setTitle(commandConfig.title)
+        .setDescription(commandConfig.description);
 
         return msg.channel.send({ embeds: [embed] });
     }
@@ -111,7 +114,7 @@ export default function Commands(name, icon, client, msg) {
                 .setColor('BLURPLE');
                 message.edit({ embeds: [embed] });
 
-                console.log(`Bot restarted by ${msg.author.username}#${msg.author.discriminator}`);
+                console.log('\x1b[34m%s\x1b[0m', `Bot restarted by ${msg.author.username}#${msg.author.discriminator}`);
             }, 2000);
 
             return setTimeout(() => {
@@ -140,12 +143,11 @@ export default function Commands(name, icon, client, msg) {
                 .setColor('BLURPLE');
                 message.edit({ embeds: [embed] });
 
-                console.log(`Bot stopped by ${msg.author.username}#${msg.author.discriminator}`);
+                console.log('\x1b[34m%s\x1b[0m', `Bot stopped by ${msg.author.username}#${msg.author.discriminator}`);
+                setTimeout(() => {
+                    exit(1);
+                }, 1000);
             }, 1000);
-
-            setTimeout(() => {
-                exit(1);
-            }, 2000);
 
         })
     }
@@ -173,7 +175,7 @@ export default function Commands(name, icon, client, msg) {
         .setDescription(`\nStatus successfully updated :white_check_mark:\n\`\`\`${status}\`\`\``);
 
         if(status === 'remove') {
-            console.log(`Bot status removed by ${msg.author.username}#${msg.author.discriminator}`);
+            console.log('\x1b[34m%s\x1b[0m', `Bot status removed by ${msg.author.username}#${msg.author.discriminator}`);
             client.user.setActivity('');
             editFile('status', '');
             embed.setDescription('\nStatus successfully removed :white_check_mark:');
@@ -181,7 +183,7 @@ export default function Commands(name, icon, client, msg) {
         }
 
         msg.channel.send({ embeds: [embed] });
-        console.log(`Bot status changed to ${status} by ${msg.author.username}#${msg.author.discriminator}`);
+        console.log('\x1b[34m%s\x1b[0m', `Bot status changed to '${status}' by ${msg.author.username}#${msg.author.discriminator}`);
         client.user.setActivity(status, { type: 'PLAYING' });
         return editFile('status', status);
     }

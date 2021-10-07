@@ -28,42 +28,24 @@ const SetClient = sentClient => {
 //! Runs when the user starts the test
 async function startTest(user) {
     StartLOG(user);
+    user.test.unAnsweredQuestions = [ ...questionConfig.questions ];
 
     // Random number generator
-    const randomGen = max => {
-        return Math.floor(Math.random() * max) + 1;
+    const randomGen = () => {
+        if(user.test.unAnsweredQuestions.length > 1) return user.test.unAnsweredQuestions[Math.floor(Math.random() * user.test.unAnsweredQuestions.length)];
+        return user.test.unAnsweredQuestions[0];
     }
 
     //? Loop through each question and send it as an embed
     for(let i = 0; i < questionConfig.questions.length; i++) {
 
-        let randQuestion = randomGen(questionConfig.questions.length);
-        let good = true;
-    
-        // If the random question was already answered generate a new one
-        if(user.test.answers.length > 0) {
-            user.test.answers.forEach(answer => {
-                if(answer.index+1 == randQuestion) good = false;
-                while(!good) {
-                    if(answer.index+1 == randQuestion) {
-                        randQuestion = randomGen(questionConfig.questions.length);
-                    } else {
-                        good = true;
-                    }
-                }
-            })
-        }
-
-        // Wait until an unanswered question was generated
-        await new Promise(resolve => {
-            if(good) resolve(1);
-        })
+        user.test.question = randomGen();
 
         // Send the question to the user
-        let msg = await user.send({ embeds: [Question(questionConfig.questions[randQuestion-1], i)] });
+        let msg = await user.send({ embeds: [Question(user.test.question, i)] });
 
         let reactions;
-        switch(questionConfig.questions[randQuestion-1].answers.length) {
+        switch(user.test.question.answers.length) {
             case 1:
                 reactions = ['1️⃣'];
             break;
@@ -91,10 +73,10 @@ async function startTest(user) {
                 msg.delete();
                 user.fails = { timer: null, num: user.fails ? ++user.fails.num : 1 };
 
-                if(user.fails.num < 3) await user.send({ embeds: [Failed(user)] });
+                if(user.fails.num < questionConfig.banFail) await user.send({ embeds: [Failed(user)] });
 
                 EndTimeLOG(user);
-                return startTimer(user, client.channels.cache.get(config.rulesID));
+                return startTimer(user, client.channels.cache.get(config.rulesChannelID));
             }, questionConfig.questionTime);
     
             // Filter out bot reactions and those that aren't the appropriate emojis
@@ -106,17 +88,25 @@ async function startTest(user) {
             const ansCollector = msg.createReactionCollector({filter, time: questionConfig.questionTime });
             await new Promise(async (resolve) => {
                 ansCollector.on('collect', async (reaction) => {
-                    resolve(reaction);
 
                     if(user.test.fail) {
                         i = questionConfig.questions.length;
                         clearTimeout(user.test.time);
                     } else {
-                        user.test.answers.push({ answer: convertEmoji(reaction.emoji.name), index: randQuestion-1 });
+                        user.test.answers.push({ answer: convertEmoji(reaction.emoji.name), index: questionConfig.questions.indexOf(user.test.question) });
                         clearTimeout(user.test.time);
-                        if(i === questionConfig.questions.length - 1) endTest(user, client.guilds.cache.get(data.serverID).roles.cache.get(questionConfig.roleID), client.guilds.cache.get(data.serverID).members.cache.get(user.id), client.channels.cache.get(config.rulesChannelID));
+                        user.test.unAnsweredQuestions.splice(user.test.unAnsweredQuestions.indexOf(user.test.question), 1);
+
+                        if(i === questionConfig.questions.length-1) {
+                            delete user.test.question;
+                            delete user.test.unAnsweredQuestions;
+
+                            endTest(user, client.guilds.cache.get(data.serverID).roles.cache.get(questionConfig.roleID), client.guilds.cache.get(data.serverID).members.cache.get(user.id), client.channels.cache.get(config.rulesChannelID));
+                        }
                     }
                     msg.delete();
+                    resolve(reaction);
+
                 });
             })
 
@@ -188,7 +178,7 @@ async function startTimer(user, rulesChannel) {
     // Make the user see the rules channel again
     rulesChannel.permissionOverwrites.delete(user.id);
 
-    user.test = { id: user.id, fail: true, timer: null, timeLeft: 0 };
+    user.test = { fail: true, timer: null, timeLeft: 0 };
 
     if(user.fails.num === 3) {
         BanLOG(user);
