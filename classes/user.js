@@ -4,8 +4,6 @@ export default class User {
         this.started = started;
         this.percentage = percentage;
         this.answers = answers;
-        this.timer = timer;
-        this.timeLeft = timeLeft;
         this.question = question;
         this.unAnsweredQuestions = unAnsweredQuestions;
     }
