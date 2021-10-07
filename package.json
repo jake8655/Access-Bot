@@ -1,0 +1,23 @@
+{
+  "name": "Access-Bot",
+  "version": "1.0.0",
+  "description": "Give access to people on your server!",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node ./index.js",
+    "update": "git pull && npm install",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jake",
+  "license": "ISC",
+  "dependencies": {
+    "child_process": "^1.0.2",
+    "discord.js": "^13.1.0",
+    "dotenv": "^10.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  }
+}
