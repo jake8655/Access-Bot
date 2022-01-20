@@ -17,12 +17,11 @@ This is a **self-host** bot, that means you will have to *download* the files ab
   <li>Download the bot's files from <a href="https://github.com/Jake8655/Access-Bot">the github page</a>.</li>
   <li>Create a <a href="https://discord.com/developers">Discord bot</a> and paste the bot's token into the <b>.env</b> file.</li>
   <li>Customize the bot to your likings.</li>
-  <li>Run the <b>start.bat</b> file or the <b>start.vbs</b> file. (Basically the difference is that the vbs file can run in the background.)</li>
+  <li>Run the <b>start.bat</b> file or the <b>start.vbs</b> file. (Basically the difference is that the vbs file can run in the background.) and invite your bot AFTER you have started it!</li>
 </ol>
-<p><b>If you get stuck during the installation feel free to get in touch with <a href="https://discord.com/users/300963276223807488">me</a> through Discord.</b> I usually respond in a day or less.</p>
 
 # Contact me!
-If the installation instructions aren't clear enough or you find any bugs feel free to contact me. I'm the most active on *Discord*, but I'll list my other social media platforms as well.
+I do not take responsibility for this project anymore, nor am I going to maintain it, however I am not deleting it if anyone needed this crap. If you would still like to contact me though, feel free to:
 <ul>
   <li><a href="https://discord.com/users/300963276223807488">Discord</a></li>
   <li><a href="https://steamcommunity.com/profiles/76561198259449147/">Steam</a></li>
